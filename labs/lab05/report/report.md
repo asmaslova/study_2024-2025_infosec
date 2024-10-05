@@ -72,6 +72,8 @@ header-includes:
 
 # Выполнение лабораторной работы
 
+## Создание программы
+
 1. Войдите в систему от имени пользователя guest.
 2. Создайте программу simpleid.c:
 ```c++
@@ -98,6 +100,11 @@ return 0;
 5. Выполните системную программу id:
 `id`
 и сравните полученный вами результат с данными предыдущего пункта задания.
+
+Выполнение этих трех пунктов вы можете видеть ниже (рис. [@fig:002]).
+
+![Создание программы simpleid.c](image/2.png){#fig:002 width=70%}
+
 6. Усложните программу, добавив вывод действительных идентификаторов:
 ```c++
 #include <sys/types.h>
@@ -110,7 +117,7 @@ main ()
     uid_t e_uid = geteuid ();
     gid_t real_gid = getgid ();
     gid_t e_gid = getegid () ;
-    printf ("e_uid=%d, e_gid=%d\n", e_uid, e_gid);
+    printf ("e_uid=%d, e_gid=%d\n", e_uid, e_gid); 
     printf ("real_uid=%d, real_gid=%d\n", real_uid, real_gid);
     return 0;
 }

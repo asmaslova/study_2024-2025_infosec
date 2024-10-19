@@ -1,13 +1,13 @@
 ---
 ## Front matter
 lang: ru-RU
-title: Лабораторная работа №4
-subtitle: "Дискреционное разграничение прав в Linux. Расширенные атрибуты"
+title: Лабораторная работа №7
+subtitle: "Элементы криптографии. Однократное гаммирование"
 author:
   - Маслова А. С.
 institute:
   - Российский университет дружбы народов, Москва, Россия
-date: 28 сентября 2024
+date: 19 октября 2024
 
 ## i18n babel
 babel-lang: russian
@@ -52,16 +52,68 @@ header-includes:
 
 ## Цель работы
 
-Получение практических навыков работы в консоли с расширенными атрибутами файлов.
+Освоить на практике применение режима однократного гаммирования.
 
 # Выполнение лабораторной работы
 
 ## Выполнение лабораторной работы
 
-![Выполнение пунктов 1-6](image/1.png){#fig:001 width=70%}
+```python
+import binascii
+import secrets
+
+def str_to_hex(s):
+    return binascii.hexlify(s.encode('utf-8')).decode('utf-8')
+
+def hex_to_str(h):
+     return binascii.unhexlify(h.encode('utf-8')).decode('utf-8')
+
+```
+
+## Выполнение лабораторной работы
+
+```python
+def xor_hex_str(hex1, hex2):
+    bytes1 = bytes.fromhex(hex1)
+    bytes2 = bytes.fromhex(hex2)
+    xor_result = bytes(a ^ b for a, b in zip(bytes1, bytes2))
+    return xor_result.hex()
+
+def gen_random_key(l):
+    random_bytes = secrets.token_bytes(l)
+    return random_bytes
+```
+
+## Выполнение лабораторной работы
+
+```python
+def encrypt_message(message):
+    message_bytes = message.encode('utf-8')
+    key = gen_random_key(len(message_bytes))
+    cipher_bytes = bytes(a^b for a,b in zip(message_bytes, key))
+    return cipher_bytes, key
+
+def decrypt_message(cipher_bytes, key):
+    decrypted_bytes = bytes(a^b for a,b in zip(cipher_bytes, key))
+    return decrypted_bytes.decode('utf-8')
+```
+## Выполнение лабораторной работы
+
+```python
+open_message = "С Новым Годом, друзья!"
+encrypted_message, key = encrypt_message(open_message)
+print("Зашифрованное сообщение:", encrypted_message.hex())
+print("Ключ:                   ", key.hex())
+decrypted_message = decrypt_message(encrypted_message, key)
+print("Расшифрованное сообщение:", decrypted_message)
+```
+
+## Выполнение лабораторной работы
+
+![Вывод программы](image/1.png){#fig:001 width=70%}
 
 # Вывод
 
 ## Вывод
 
-В результате выполнения работы я повысила свои навыки использования интерфейса командой строки (CLI), познакомилась на примерах с тем, как используются основные и расширенные атрибуты при разграничении доступа. Также я имела возможность связать теорию дискреционного разделения доступа (дискреционная политика безопасности) с её реализацией на практике в ОС Linux и составила наглядные таблицы, поясняющие, какие операции возможны при тех или иных установленных правах, после чего опробовала действие на практике расширенных атрибутов «а» и «i».
+В ходе лабораторной работы я освоила на практике применение режима однократного гаммирования.
